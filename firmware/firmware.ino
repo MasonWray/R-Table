@@ -12,8 +12,12 @@
 #define STEPS 200
 #define PERIOD 300
 
+#define BGSTEP 500
+#define SMSTEP 10
+
 int steps_rev;
 uint16_t position;
+uint16_t target;
 uint32_t timer;
 
 enum dir_e
@@ -35,10 +39,9 @@ void setup() {
 	digitalWrite(M0_PIN, HIGH);
 	digitalWrite(M1_PIN, HIGH);
 	position = 0;
+	target = 0;
 	Serial.begin(9600);
 }
-
-bool go = false;
 
 void loop() {
 	while (Serial.available())
@@ -46,23 +49,56 @@ void loop() {
 		char c = Serial.read();
 		switch (c)
 		{
-		case 'g':
-			go = true;
+		case 'L':
+			target = (target - BGSTEP) <= 0 ? 0 : target - BGSTEP;
 			break;
-		case 's':
-			go = false;
+		case 'l':
+			target = (target - SMSTEP) <= 0 ? 0 : target - SMSTEP;
+			break;
+		case 'r':
+			target = (target + SMSTEP) > steps_rev ? steps_rev : target + SMSTEP;
+			break;
+		case 'R':
+			target = (target + BGSTEP) > steps_rev ? steps_rev : target + BGSTEP;
 			break;
 		}
 	}
 
-	if (go)
+	if (target > position)
 	{
-		move(300);
-		delay(500);
-		move(1000);
-		delay(500);
-		move(100);
+		digitalWrite(DIR_PIN, LOW);
+		unsigned int i = 0;
+		while (target > position)
+		{
+			step();
+			delayMicroseconds(getDuration(i, target - position));
+			position++;
+			i++;
+		}
 	}
+
+	if (target < position)
+	{
+		digitalWrite(DIR_PIN, HIGH);
+		unsigned int j = 0;
+		while (target < position)
+		{
+			step();
+			delayMicroseconds(getDuration(j, position - target));
+			position--;
+			j++;
+		}
+	}
+}
+
+unsigned int getDuration(int current, int remaining)
+{
+	double fromEnd = 18000.0 * (1.0 / (1.0 + (remaining / 6.0) * (remaining / 6.0)));
+	double fromStart = 18000.0 * (1.0 / (1.0 + (current / 6.0) * (current / 6.0)));
+	double fromStart = 18000.0 * (1.0 / (1.0 + (current / 6.0) * (current / 6.0)));
+	Serial.println(fromEnd);
+	int pred = 1600 - (current * 20);
+	return 10 + (fromEnd > fromStart ? fromEnd : fromStart);
 }
 
 void step()

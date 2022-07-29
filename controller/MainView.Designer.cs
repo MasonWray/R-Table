@@ -95,6 +95,7 @@
             this.bigleft_button.TabIndex = 5;
             this.bigleft_button.Text = "<<";
             this.bigleft_button.UseVisualStyleBackColor = true;
+            this.bigleft_button.Click += new System.EventHandler(this.bigleft_button_Click);
             // 
             // littleleft_button
             // 
@@ -104,6 +105,7 @@
             this.littleleft_button.TabIndex = 6;
             this.littleleft_button.Text = "<";
             this.littleleft_button.UseVisualStyleBackColor = true;
+            this.littleleft_button.Click += new System.EventHandler(this.littleleft_button_Click);
             // 
             // bigright_button
             // 
@@ -113,6 +115,7 @@
             this.bigright_button.TabIndex = 8;
             this.bigright_button.Text = ">>";
             this.bigright_button.UseVisualStyleBackColor = true;
+            this.bigright_button.Click += new System.EventHandler(this.bigright_button_Click);
             // 
             // littleright_button
             // 
@@ -122,6 +125,7 @@
             this.littleright_button.TabIndex = 7;
             this.littleright_button.Text = ">";
             this.littleright_button.UseVisualStyleBackColor = true;
+            this.littleright_button.Click += new System.EventHandler(this.littleright_button_Click);
             // 
             // position_numericUpDown
             // 

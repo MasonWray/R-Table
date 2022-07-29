@@ -57,5 +57,29 @@ namespace controller
             }
             this.output_richTextBox.Lines = output.ToArray();
         }
+
+        private void bigleft_button_Click(object sender, EventArgs e)
+        {
+            log("Jumping left");
+            sp.WriteLine("L");
+        }
+
+        private void littleleft_button_Click(object sender, EventArgs e)
+        {
+            log("Stepping left");
+            sp.WriteLine("l");
+        }
+
+        private void littleright_button_Click(object sender, EventArgs e)
+        {
+            log("Stepping right");
+            sp.WriteLine("r");
+        }
+
+        private void bigright_button_Click(object sender, EventArgs e)
+        {
+            log("Jumping right");
+            sp.WriteLine("R");
+        }
     }
 }
