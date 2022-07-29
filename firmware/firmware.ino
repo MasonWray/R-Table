@@ -9,6 +9,7 @@
 #define DIR_PIN 9
 #define M0_PIN 12
 #define M1_PIN 11
+#define IND_PIN 13
 #define STEPS 200
 #define PERIOD 300
 
@@ -27,6 +28,7 @@ enum dir_e
 };
 
 void setup() {
+	pinMode(IND_PIN, OUTPUT);
 	pinMode(STEP_PIN, OUTPUT);
 	pinMode(DIR_PIN, OUTPUT);
 	digitalWrite(DIR_PIN, LOW);
@@ -70,7 +72,9 @@ void loop() {
 		unsigned int i = 0;
 		while (target > position)
 		{
+			digitalWrite(IND_PIN, HIGH);
 			step();
+			digitalWrite(IND_PIN, LOW);
 			delayMicroseconds(getDuration(i, target - position));
 			position++;
 			i++;
@@ -83,7 +87,9 @@ void loop() {
 		unsigned int j = 0;
 		while (target < position)
 		{
+			digitalWrite(IND_PIN, HIGH);
 			step();
+			digitalWrite(IND_PIN, LOW);
 			delayMicroseconds(getDuration(j, position - target));
 			position--;
 			j++;
@@ -94,7 +100,6 @@ void loop() {
 unsigned int getDuration(int current, int remaining)
 {
 	double fromEnd = 18000.0 * (1.0 / (1.0 + (remaining / 6.0) * (remaining / 6.0)));
-	double fromStart = 18000.0 * (1.0 / (1.0 + (current / 6.0) * (current / 6.0)));
 	double fromStart = 18000.0 * (1.0 / (1.0 + (current / 6.0) * (current / 6.0)));
 	Serial.println(fromEnd);
 	int pred = 1600 - (current * 20);
