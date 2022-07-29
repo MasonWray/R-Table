@@ -89,8 +89,12 @@
             this.Controls.Add(this.tare_button);
             this.Controls.Add(this.send_button);
             this.Controls.Add(this.connect_button);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainView";
-            this.Text = "MainView";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "Turntable Controller";
             ((System.ComponentModel.ISupportInitialize)(this.com_numericUpDown)).EndInit();
             this.ResumeLayout(false);
 
