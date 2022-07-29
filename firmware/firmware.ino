@@ -13,12 +13,12 @@
 #define STEPS 200
 #define PERIOD 300
 
-#define BGSTEP 500
+#define BGSTEP 300
 #define SMSTEP 10
 
 int steps_rev;
-uint16_t position;
-uint16_t target;
+int position;
+int target;
 uint32_t timer;
 
 enum dir_e
